@@ -218,7 +218,7 @@ class PhpcsDiff
         }
 
         $exec = PHP_BINARY . ' ' . $exec;
-        $command = $exec . ' --report=json --standard=' . $ruleset . ' ' . implode(' ', $files);
+        $command = $exec . ' --report=json --standard=' . $ruleset . ' **/*.php';
         $output = shell_exec($command);
 
         // Filter out non-json output.
