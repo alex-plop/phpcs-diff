@@ -221,6 +221,9 @@ class PhpcsDiff
         $command = $exec . ' --report=json --standard=' . $ruleset . ' ' . implode(' ', $files);
         $output = shell_exec($command);
 
+        // Filter out non-json output.
+        $output = substr($output, strpos($output, '{'));
+
         if ($this->isVerbose) {
             $this->climate->info('Running: ' . $command);
         }
