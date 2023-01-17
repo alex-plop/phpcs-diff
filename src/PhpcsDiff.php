@@ -187,7 +187,7 @@ class PhpcsDiff
      * @param string $ruleset
      * @return mixed
      */
-    protected function runPhpcs(array $files = [], string $ruleset = 'ruleset.xml')
+    protected function runPhpcs(array $files = [], string $ruleset = 'phpcs.xml')
     {
         $exec = null;
         $root = dirname(__DIR__);
