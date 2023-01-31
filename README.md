@@ -1,9 +1,4 @@
-[![Latest Version](https://img.shields.io/github/tag/olivertappin/phpcs-diff.svg?style=flat&label=release)](https://github.com/olivertappin/phpcs-diff/tags)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
-[![Build Status](https://travis-ci.org/olivertappin/phpcs-diff.svg?branch=master)](https://travis-ci.org/olivertappin/phpcs-diff)
-[![Quality Score](https://img.shields.io/scrutinizer/g/olivertappin/phpcs-diff.svg?style=flat)](https://scrutinizer-ci.com/g/olivertappin/phpcs-diff)
-[![GitHub issues](https://img.shields.io/github/issues/olivertappin/phpcs-diff.svg)](https://github.com/olivertappin/phpcs-diff/issues)
-[![Total Downloads](https://img.shields.io/packagist/dt/olivertappin/phpcs-diff.svg?style=flat)](https://packagist.org/packages/olivertappin/phpcs-diff)
+This is a fork of [olivertapping/phpcs-diff](https://github.com/olivertappin/phpcs-diff).
 
 ## Installation
 
@@ -19,12 +14,12 @@ Run the following command from your project root:
 
 #### Manual Installation
 
-Alternatively, you can manually include a dependency for `olivertappin/phpcs-diff` in your `composer.json` file. For example:
+Alternatively, you can manually include a dependency for `alex-plop/phpcs-diff` in your `composer.json` file. For example:
 
 ```json
 {
     "require-dev": {
-        "olivertappin/phpcs-diff": "^2.0"
+        "alex-plop/phpcs-diff": "^2.0"
     }
 }
 ```
@@ -35,7 +30,7 @@ And run `composer update olivertappin/phpcs-diff`.
 
 You can also download the `phpcs-diff` source and create a symlink to your `/usr/bin` directory:
 
-    git clone https://github.com/olivertappin/phpcs-diff.git
+    git clone https://github.com/alex-plop/phpcs-diff.git
     ln -s phpcs-diff/bin/phpcs-diff /usr/bin/phpcs-diff
     cd /var/www/project
     phpcs-diff master -v

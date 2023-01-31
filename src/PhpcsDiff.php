@@ -55,11 +55,6 @@ class PhpcsDiff
             $this->isVerbose = true;
         }
 
-        if (!isset($this->argv[1])) {
-            $this->error('Please provide a <bold>base branch</bold> as the first argument.');
-            return;
-        }
-
         $this->baseBranch = 'origin/' . str_replace('origin/', '', $this->argv[1]);
         $this->currentBranch = trim(shell_exec('git rev-parse --verify HEAD'));
 
