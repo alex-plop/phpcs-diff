@@ -10,7 +10,7 @@ The recommended method of installing this library is via [Composer](https://getc
 
 Run the following command from your project root:
 
-    composer global require olivertappin/phpcs-diff
+    composer global require alex-plop/phpcs-diff
 
 #### Manual Installation
 
@@ -19,12 +19,12 @@ Alternatively, you can manually include a dependency for `alex-plop/phpcs-diff` 
 ```json
 {
     "require-dev": {
-        "alex-plop/phpcs-diff": "^2.0"
+        "alex-plop/phpcs-diff": "^0.1"
     }
 }
 ```
 
-And run `composer update olivertappin/phpcs-diff`.
+And run `composer update alex-plop/phpcs-diff`.
 
 ### Git Clone
 
@@ -39,20 +39,21 @@ You can also download the `phpcs-diff` source and create a symlink to your `/usr
 
 ### Basic Usage
 
+Compare the staged and unstaged files from the current folder to the HEAD of the branch.
 ```shell
-phpcs-diff <current-branch> <base-branch> -v
+phpcs-diff 
 ```
 
-Where the current branch you are on is the branch you are comparing with, and `develop` is the base branch. In this example, `phpcs-diff` would run the following diff statement behind the scenes:
+Compare the staged files from the current folder to the <base-branch>.
+E.g. <base-branch> being master/main.
 
 ```shell
-git diff my-current-branch develop
+phpcs-diff <base-branch>
 ```
 
 _Please note:_
 - The `-v` flag is optional. This returns a verbose output during processing.
-- The `current-branch` parameter is optional. If this is not defined, `phpcs-diff` will use the current commit hash via `git rev-parse --verify HEAD`.
-- You must have a `ruleset.xml` defined in your project base directory.
+- You must have a `phpcs.xml` defined in your project base directory.
 
 After running `phpcs-diff`, the executable will return an output similar to the following:
 
@@ -65,33 +66,6 @@ module/Poject/src/Console/Script.php
 ```
 
 Currently this is the only supported format however, I will look into adding additional formats (much like `phpcs`) in the near future.
-
-### Travis CI Usage
-
-To use this as part of your CI/CD pipeline, create a script with the following:
-
-```bash
-#!/bin/bash
-set -e
-if [ ! -z "$TRAVIS_PULL_REQUEST_BRANCH" ]; then
-  git fetch `git config --get remote.origin.url` $TRAVIS_BRANCH\:refs/remotes/origin/$TRAVIS_BRANCH;
-  composer global require olivertappin/phpcs-diff;
-  ~/.composer/vendor/bin/phpcs-diff $TRAVIS_BRANCH;
-else
-  echo "This test does not derive from a pull-request."
-  echo "Unable to run phpcs-diff (as there's no diff)."
-
-  # Here you might consider running phpcs instead:
-  # composer global require squizlabs/php_codesniffer;
-  # ~/.composer/vendor/bin/phpcs .
-fi;
-```
-
-Which will allow you to run `phpcs-diff` against the diff of your pull-request.
-
-Here's a sample of how this might look within Travis CI:
-
-![Travis CI Example](https://user-images.githubusercontent.com/9773040/70551339-43bcfc00-1b6f-11ea-90c7-bc660e8dea28.png)
 
 ## About
 `phpcs-diff` detects violations of a defined set of coding standards based on a `git diff`. It uses `phpcs` from the [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) project.
