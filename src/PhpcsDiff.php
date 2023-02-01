@@ -32,6 +32,11 @@ class PhpcsDiff
     protected $exitCode = 0;
 
     /**
+     * @var bool
+     */
+    protected $includeUnstaged = false;
+
+    /**
      * @var string
      */
     protected $baseBranch;
@@ -55,7 +60,18 @@ class PhpcsDiff
             $this->isVerbose = true;
         }
 
-        $this->baseBranch = 'origin/' . str_replace('origin/', '', $this->argv[1]);
+        if (in_array('--unstaged', $this->argv) || (!isset($this->argv[1]))) {
+            $this->includeUnstaged = true;
+        }
+
+        if (!isset($this->argv[1])) {
+            return;
+        }
+
+        if (strpos($this->argv[1], '--') === false) {
+            $this->baseBranch = 'origin/' . str_replace( 'origin/', '', $this->argv[1] );
+        }
+
         $this->currentBranch = trim(shell_exec('git rev-parse --verify HEAD'));
 
         if (empty($this->currentBranch)) {
@@ -213,11 +229,8 @@ class PhpcsDiff
         }
 
         $exec = PHP_BINARY . ' ' . $exec;
-        $command = $exec . ' --report=json -q --standard=' . $ruleset . ' **/*.php';
+        $command = $exec . ' --report=json -q --standard=' . $ruleset . ' .';
         $output = shell_exec($command);
-
-        // Filter out non-json output.
-        $output = substr($output, strpos($output, '{'));
 
         if ($this->isVerbose) {
             $this->climate->info('Running: ' . $command);
@@ -281,6 +294,7 @@ class PhpcsDiff
                 ' | grep -E ' . escapeshellarg($pattern['basic']);
 
             $lineDiff = shell_exec($command);
+
             $lines = array_filter(explode(PHP_EOL, $lineDiff));
             $linesChanged = [];
 
@@ -302,6 +316,13 @@ class PhpcsDiff
 
                 foreach (range($start, $end) as $l) {
                     $linesChanged[$l] = null;
+                }
+            }
+
+            // Check even the unstaged files from git.
+            if ($this->includeUnstaged && empty($linesChanged)) {
+                foreach ($data['messages'] as $messageData) {
+                    $linesChanged[] = $messageData['line'];
                 }
             }
 
