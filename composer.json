@@ -1,7 +1,6 @@
 {
     "name": "alex-plop/phpcs-diff",
     "description": "Detects violations of a defined coding standard based on a git diff.",
-    "version": "",
     "require": {
         "php": "^7.1 || ^7.3 || ^7.4 || ^8.0",
         "ext-json": "*",
